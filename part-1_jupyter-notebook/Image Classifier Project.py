@@ -26,12 +26,12 @@
 
 """
 -------------------------------------
-file: train.py
 
-author:     Jeremy Beasley 
-email:      github@jeremybeasley.com
-created:    20190727
-updated:    20190728
+AUTHOR:     Jeremy Beasley 
+EMAIL:      github@jeremybeasley.com
+CREATED:    20190727
+REVISED:    20190728
+
 -----------------------------------
 """
 
@@ -97,7 +97,7 @@ param_device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # Se
 # -------------------------------------
 
 
-# TODO change this to use better print formatting for a table
+# TODO - in the future, change this to use better print formatting for a table
 print("---- Training with parameters ----")
 print("----------------------------------")
 print("input path:         ", param_input_path)
@@ -190,23 +190,7 @@ class_to_idx = test_data.class_to_idx
 # ----------------------------------------------
 
 def learn(model, train_loader, valid_loader, optimizer, criterion, epochs, print_every, device): 
-    """ Trains a neural network model 
-
-    TODO — Update args with class name
-    
-    Args:
-        model (int):           The first parameter.
-        train_loader ():       Training dataset
-        valid_loader ():       Training dataset
-        optimizer ():          Optimizer
-        criterion ():          Optimizer
-        epochs  ():            The second parameter.
-        print_every():         Number of steps before running validation and printing results
-        device   ():           ...
-
-    Returns:
-        bool: The return value. True for success, False otherwise.
-    """
+    """ Trains a neural network model """
     
     print("Start learning on device {} ... ".format(device))
     
@@ -260,21 +244,7 @@ def learn(model, train_loader, valid_loader, optimizer, criterion, epochs, print
 
 
 def validate(model, valid_loader, criterion, device): 
-    """ Performs model validation
-     
-    TODO — Update docstring
-
-    Longer, multiline description as needed.
-
-    Args:
-            param1 (int): The first parameter.
-            param2 (str): The second parameter.
-
-    Returns:
-        bool: The return value. True for success, False otherwise.
-
-    """
-    
+    """ Assesses accurary of model during training. Returns total loss and accuracy """    
     test_loss = 0
     accuracy = 0
     
@@ -299,20 +269,7 @@ def validate(model, valid_loader, criterion, device):
 
 
 def test(model, test_loader, device): 
-    """ Function summary
-
-    TODO - Update docstring
-
-    Longer, multiline description as needed.
-
-    Args:
-            param1 (int): The first parameter.
-            param2 (str): The second parameter.
-
-    Returns:
-        bool: The return value. True for success, False otherwise.
-
-    """
+    """ Calculate testing accurary of model. Prints accurary as percentage to console """
     
     print("Calculate testing accuracy ... ", end="")
     
@@ -348,20 +305,7 @@ def test(model, test_loader, device):
 # ---------------------------------------------- 
 
 def save_model(model, optimizer, class_to_idx, architecture, in_features, hidden_units, output_size, learning_rate, epochs, filename, data_path):
-    """ Save trained model for later use
-
-    TODO — Update doc strings
-    
-    Longer, multiline description as needed.
-
-    Args:
-            param1 (int): The first parameter.
-            param2 (str): The second parameter.
-
-    Returns:
-        bool: The return value. True for success, False otherwise.
-
-    """
+    """ Save trained model for later use. """
     
     print("Saving model to: ", filename, end="")
     
@@ -382,7 +326,7 @@ def save_model(model, optimizer, class_to_idx, architecture, in_features, hidden
 
     
 def get_in_features(model, param_architecture): 
-    """ Return in_features for a given model"""
+    """ Return in_features for a given model """
     
     in_features = 0
     
@@ -398,8 +342,7 @@ def get_in_features(model, param_architecture):
 
 
 def load_model(filename, device): 
-    """ Load model """
-    # TODO — remove device?
+    """ Loads and returns model """
     
     print("Loading trained model from: {} ... ".format(filename))
     checkpoint = torch.load(filename) 
@@ -583,9 +526,7 @@ optimizer = optim.Adam(model.classifier.parameters(), lr=param_learning_rate)
 
 
 def process_image(image):
-    ''' Processes a PIL image—scales, crops, and normalizes—for a PyTorch model,
-        returns an Numpy array
-    '''
+    """ Processes a PIL image—scales, crops, and normalizes—for a PyTorch model. Returns a Numpy array. """
     
     print("Loading image data ... ", end="")
     prediction_transforms = transforms.Compose([transforms.Resize(256),
@@ -606,7 +547,7 @@ def process_image(image):
 
 
 def imshow(image, ax=None, title=None):
-    """Imshow for Tensor."""
+    """ Imshow for Tensor """
     if ax is None:
         fig, ax = plt.subplots()
     
@@ -647,9 +588,7 @@ def imshow(image, ax=None, title=None):
 
 
 def predict(image_path, model, topk=5):
-    ''' Predict the class (or classes) of an image using a trained deep learning model.
-        TODO — Modify docstrings
-    '''
+    """ Predict the class (or classes) of an image using a trained deep learning model. """
     
     # --- Load image to get prediction --------- 
     img_np = process_image(image_path)
