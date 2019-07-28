@@ -1,11 +1,16 @@
 """
 -------------------------------------
-file: predict.py
+FILE:       predict.py
 
-author:     Jeremy Beasley 
-email:      github@jeremybeasley.com
-created:    20190727
-updated:    20190728
+AUTHOR:     Jeremy Beasley 
+EMAIL:      github@jeremybeasley.com
+CREATED:    20190727
+REVISED:    20190728
+
+PURPOSE:    To make prediction using a pre-trained NN and display the top-k classes inferrer from input image
+
+Example calls: 
+    python predict.py ./flowers/test/101/image_07952.jpg checkpoint.pth --gpu
 -----------------------------------
 """
 
@@ -63,17 +68,22 @@ with open(options.category_names, 'r') as f:
     cat_to_name = json.load(f)
 print("done")
 
-# ------ Load trained model -----------
-model = util.load_model(param_load_file_name, options.gpu)
+def main(): 
+    # ------ Load trained model -----------
+    model = util.load_model(param_load_file_name, options.gpu)
 
-# ------ Make inference -----------
-print("Getting prediction ... ", end="")
-top_ps, top_labels, top_flowers = model.predict(param_image_file, options.top_k, cat_to_name)
+    # ------ Make inference -----------
+    print("Getting prediction ... ", end="")
+    top_ps, top_labels, top_flowers = model.predict(param_image_file, options.top_k, cat_to_name)
 
-for i in range( len(top_flowers) ):
-    print(" {} with {:.3f} is {}".format(i+1, top_ps[i], top_flowers[i]))
-print("done")
+    for i in range( len(top_flowers) ):
+        print(" {} with {:.3f} is {}".format(i+1, top_ps[i], top_flowers[i]))
+    print("done")
 
 
 # util.imshow(util.process_image(param_image_file))
 # util.plot_bar(top_ps, top_flowers)
+
+# --- Call to main function --------- 
+if __name__ == "__main__": 
+    main()

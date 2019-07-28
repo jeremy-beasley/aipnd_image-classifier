@@ -1,11 +1,19 @@
 """
 -------------------------------------
-file: network.py
+FILE:       network.py
 
-author:     Jeremy Beasley 
-email:      github@jeremybeasley.com
-created:    20190727
-updated:    20190728
+AUTHOR:     Jeremy Beasley 
+EMAIL:      github@jeremybeasley.com
+CREATED:    20190727
+REVISED:    20190728
+
+PURPOSE:    Create Network class with these primary methods: 
+                - learn for training a network 
+                - validate to test while training
+                - test to assess accuracy
+                - save to capture state of a pre-trained network
+                - predict to make inferences
+
 -----------------------------------
 """
 
@@ -90,7 +98,7 @@ class Network(nn.Module):
 
         
     def get_in_features(self, param_architecture): 
-        """ Return in_features for a given model"""
+        """ Return in_features for a given model """
 
         in_features = 0
 
@@ -164,7 +172,7 @@ class Network(nn.Module):
 
 
     def validate(self, device): 
-        """ Performs model validation """
+        """ Assesses accurary of model during training. Returns total loss and accuracy """
 
         test_loss = 0
         accuracy = 0
@@ -190,7 +198,7 @@ class Network(nn.Module):
 
 
     def test(self, device): 
-        """ Function summary """
+        """ Calculate testing accurary of model. Prints accurary as percentage to console """
 
         print("Calculate testing accuracy ... ", end="")
         correct = 0
@@ -219,12 +227,11 @@ class Network(nn.Module):
 
 
     def load_state_dictionary(self, state_dictionary):
-        ''' helper function to load_state_dict '''
         self.model.load_state_dict(state_dictionary)
         
         
     def save(self, architecture, hidden_units, output_size, learning_rate, epochs, filename, data_path):
-        """ Save trained model for later use"""
+        """ Save trained model for later use """
 
         print("Saving model to: ", filename, end="")
 
@@ -244,9 +251,7 @@ class Network(nn.Module):
 
 
     def predict(self, image_path, topk, cat_to_name):
-        ''' Predict the class (or classes) of an image using a trained deep learning model.
-            TODO — Modify docstrings
-        '''
+        """ Predict the class (or classes) of an image using a trained deep learning model. """
 
         # --- Load image to get prediction --------- 
         img_np = util.process_image(image_path)

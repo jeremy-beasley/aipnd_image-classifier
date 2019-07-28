@@ -1,11 +1,19 @@
 """
 -------------------------------------
-file: util.py
+FILE:       util.py
 
-author:     Jeremy Beasley 
-email:      github@jeremybeasley.com
-created:    20190727
-updated:    20190728
+AUTHOR:     Jeremy Beasley 
+EMAIL:      github@jeremybeasley.com
+CREATED:    20190727
+REVISED:    20190728
+
+PURPOSE:    A variety of helper functions used across train.py, predict.py and network.py: 
+                - load_model to load previously trained models
+                - get_duration to measure start/stop times to access how long compute runs 
+                - plot_bar to show bar charts of top classes (for sanity checking results)
+                - imshow to show images (for sanity checking results)
+                - process_image to manipulate image for use in network
+
 -----------------------------------
 """
 
@@ -34,7 +42,7 @@ import network as cnn
 # ----------------------------------------------
 
 def load_model(filename, device): 
-    """ Load model """
+    """ Loads and returns model """
     
     print("Loading trained model from: {} ... ".format(filename))
     checkpoint = torch.load(filename) 
@@ -82,9 +90,7 @@ def plot_bar(np_ps, np_flower_names):
     
     
 def process_image(image):
-    ''' Processes a PIL image—scales, crops, and normalizes—for a PyTorch model,
-        returns an Numpy array
-    '''
+    """ Processes a PIL image—scales, crops, and normalizes—for a PyTorch model. Returns a Numpy array. """
     
     print("Loading image data ... ", end="")
     prediction_transforms = transforms.Compose([transforms.Resize(256),
@@ -101,7 +107,7 @@ def process_image(image):
 
 
 def imshow(image, ax=None, title=None):
-    """Imshow for Tensor."""
+    """ Imshow for Tensor """
     if ax is None:
         fig, ax = plt.subplots()
     

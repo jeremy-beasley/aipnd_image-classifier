@@ -1,11 +1,17 @@
 """
 -------------------------------------
-file: train.py
+FILE: train.py
 
-author:     Jeremy Beasley 
-email:      github@jeremybeasley.com
-created:    20190727
-updated:    20190728
+AUTHOR:     Jeremy Beasley 
+EMAIL:      github@jeremybeasley.com
+CREATED:    20190727
+REVISED:    20190728
+
+PURPOSE:    To build, train and save a NN capabable of classifying a directory of images
+
+
+Example calls: 
+    python train.py flowers --gpu
 -----------------------------------
 """
 
@@ -46,6 +52,8 @@ print("---- Running with parameters ----")
 print("----------------------------------")
 print("input path: ", param_input_path)
 
+
+# --- Check that parameters are set --------- 
 if options.save_directory is not None:
     print("save directory: ", options.save_directory)
     
@@ -67,21 +75,26 @@ if options.gpu is not None:
 print("-------------------------------")
 
 
+def main(): 
+
+    # ------- Create network ---------------------------
+    model = cnn.Network(param_input_path, param_output_size, options.architecture, options.hidden_units, options.learning_rate, param_device)
+
+    # --- Calculate time to train --------- 
+    start = time.time()
+    model.learn(options.epochs, param_print_every, param_device) 
+    print("Time to learn: ", util.get_duration(time.time() - start))
 
 
-# ------- Create network ---------------------------
-model = cnn.Network(param_input_path, param_output_size, options.architecture, options.hidden_units, options.learning_rate, param_device)
+    # --- Test the network --------- 
+    start = time.time() 
+    model.test(param_device)
+    print("Time to test: ", util.get_duration(time.time() - start))
 
-# --- Calculate time to train --------- 
-start = time.time()
-model.learn(options.epochs, param_print_every, param_device) 
-print("Time to learn: ", util.get_duration(time.time() - start))
+    # --- Save trained network --------- 
+    model.save(options.architecture, options.hidden_units, param_output_size, options.learning_rate, options.epochs, options.save_directory + param_model_save_filename, param_input_path)
+    
 
-
-# --- Test the network --------- 
-start = time.time() 
-model.test(param_device)
-print("Time to test: ", util.get_duration(time.time() - start))
-
-# --- Save trained network --------- 
-model.save(options.architecture, options.hidden_units, param_output_size, options.learning_rate, options.epochs, options.save_directory + param_model_save_filename, param_input_path)
+# --- Call to main function --------- 
+if __name__ == "__main__": 
+    main()
